@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="dbfb2a50-4229-4305-94dc-26caf62ac642" name="Default Changelist" comment="Added an audio file to test, wrote a basic idea on how to store the timestamps along the text">
+    <list default="true" id="dbfb2a50-4229-4305-94dc-26caf62ac642" name="Default Changelist" comment="First translation Speech -&gt; Text :D">
+      <change afterPath="$PROJECT_DIR$/example_long_file.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scraper.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/recognition.py" beforeDir="false" afterPath="$PROJECT_DIR$/recognition.py" afterDir="false" />
     </list>
@@ -72,7 +74,10 @@
       <updated>1616254997777</updated>
       <workItem from="1616254999414" duration="2053000" />
       <workItem from="1616265428726" duration="1020000" />
-      <workItem from="1616269917145" duration="6705000" />
+      <workItem from="1616269917145" duration="7459000" />
+      <workItem from="1616983752689" duration="648000" />
+      <workItem from="1617037495934" duration="30000" />
+      <workItem from="1617476191641" duration="9468000" />
     </task>
     <task id="LOCAL-00001" summary="Added an audio file to test, wrote a basic idea on how to store the timestamps along the text">
       <created>1616290875805</created>
@@ -81,7 +86,14 @@
       <option name="project" value="LOCAL" />
       <updated>1616290875805</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="First translation Speech -&gt; Text :D">
+      <created>1616300212066</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1616300212066</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -101,9 +113,10 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Added an audio file to test, wrote a basic idea on how to store the timestamps along the text" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added an audio file to test, wrote a basic idea on how to store the timestamps along the text" />
+    <MESSAGE value="First translation Speech -&gt; Text :D" />
+    <option name="LAST_COMMIT_MESSAGE" value="First translation Speech -&gt; Text :D" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/recognition_py$recognition.coverage" NAME="recognition Coverage Results" MODIFIED="1616300073989" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/recognition_py$recognition.coverage" NAME="recognition Coverage Results" MODIFIED="1617505724275" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
