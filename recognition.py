@@ -2,17 +2,17 @@ import speech_recognition as sr
 import pocketsphinx
 import pydub
 
-# L'idée est de faire une boucle for pour analyser
-# le contenu audio brin par brin avec un certain
-# chevauchement entre les segments pour éviter les
-# coupures
-OFFSET          = 0
-CHUNK_LEN       = 10
-OVERLAP         = 2
-STEP            = CHUNK_LEN-OVERLAP
-text_register   = [] # On veut une liste avec un objet text et un index du segment analysé
-completed       = False
-counter         = 0
+# The idea is to parse an audio file by segment in
+# a loop with an overlap between each segment to avoid
+# the cuts
+OFFSET = 0  # Tunable parameter
+CHUNK_LEN = 4  # Tunable parameter
+OVERLAP = 1.5  # Tunable parameter
+STEP = CHUNK_LEN - OVERLAP
+text_register = []  # List with an index and the words associated with the index segment
+completed = False
+counter = 0
+
 
 def get_timestamp(text_register: list, input: str):
     # Check if the input substring can be found in the text_register strings
@@ -21,38 +21,52 @@ def get_timestamp(text_register: list, input: str):
     for i in range(len(text_register)):
         if text_register[i][1].find(input) != -1:
             # Add the index in text_register converted in seconds
-            timestamps_list.append(i*STEP)
+            timestamps_list.append((i + 1) * STEP)
     return timestamps_list
 
+
 # get user input
-user_input = input('What word are you looking for?')
+# TODO: Set all code below in a function to run from the main file
+user_input = input('Which word are you looking for?')
 
 while not completed:
     # Will mark completed when total offset + duration will be > file_duration
+    try:
+        # TODO: Use a parameter to search for the .wav file in the folder
+        with sr.AudioFile('Why is it so hard to cure cancer - Kyuson Yun.wav') as source:
+            r = sr.Recognizer()
+            file_length = source.DURATION  # float
+            # r.energy_threshold = 300 # if we have trouble getting clear audio
+            r.adjust_for_ambient_noise(source)
+            # Even if we open the file, we need to create an audio object by recording
+            audio = r.record(source, offset=OFFSET, duration=CHUNK_LEN)
 
-    with sr.AudioFile('sample_phone_call_youtube.wav') as source:
-        r = sr.Recognizer()
-        file_length = source.DURATION  # float
-        #r.energy_threshold = 300
-        r.adjust_for_ambient_noise(source)
-        # Meme si on ouvre le fichier audio, il faut quand même l'enregistrer dans la classe recognizer
-        audio = r.record(source, offset=OFFSET, duration=CHUNK_LEN)
+            text = r.recognize_sphinx(audio_data=audio, language='en-US')  # , show_all=True) # Show All gives
+            # all possible translations
+            # Throws an exception if no words or not gibberish type speech_recognition.UnknownValueError
+            print('text: ', text)
+            print('progression: ', {(CHUNK_LEN-OVERLAP)*i/file_length*100} '%')
+            OFFSET += STEP
 
-        text = r.recognize_sphinx(audio_data=audio, language='en-US') #, show_all=True) # Show All montre toutes \
-        # les traductions probables du fichier
-        print('text: ', text)
+            if OFFSET + CHUNK_LEN > file_length:
+                completed = True
+                break
+            counter += 1
+            text_register.append([counter, text])
+
+    except sr.UnknownValueError as error:
+        print('Speech unintelligible or no words at all in this chunk')
         OFFSET += STEP
 
         if OFFSET + CHUNK_LEN > file_length:
             completed = True
             break
-    counter += 1
-    text_register.append([counter, text])
+        counter += 1
+        text_register.append([counter, 'NoWordsErrorString'])
+        pass
 
 timestamps_list = get_timestamp(text_register, user_input)
 if not timestamps_list:
     print('no matches!')
 else:
-    print('matches at: ', timestamps_list)
-
-
+    print(f'matches for {user_input} at: ', timestamps_list)

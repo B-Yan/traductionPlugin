@@ -1,0 +1,1 @@
+alert("Il fait beauuuuuuuuu, le temps parfait")
