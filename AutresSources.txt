@@ -1,0 +1,7 @@
+https://eecs.blog/making-a-browser-extension/
+https://medium.com/front-end-weekly/how-to-make-a-chrome-browser-extension-from-scratch-chrome-extension-development-basics-basic-ba1daee11123
+https://stackoverflow.com/questions/53544104/how-to-run-a-python-script-from-html-in-google-chrome
+https://developer.chrome.com/docs/apps/nativeMessaging/
+https://pythonexamples.org/python-py-to-exe/
+
+https://github.com/TonyBoy22/controleFvoix?fbclid=IwAR38yvVeOnoM_6aDUy2_3tjiBmWFdvDCEE6NtbF-2jN6OGJmdHnFhxKdmdE

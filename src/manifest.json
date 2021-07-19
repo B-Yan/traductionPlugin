@@ -1,0 +1,20 @@
+{
+	"manifest_version": 3,
+	"name": "AudioSearch",
+	"version": "0.1",
+	"description": "Parse audio content to get input timestamp",
+	"browser_action": {
+		"default_icon": frontend/icon.png,
+		"default_popup": frontend/popup.html
+	}
+	"permissions": ["activeTab"]
+	
+		"content_scripts":[
+		{
+			"matches":[
+			 "<all_urls>"
+			 ],
+			 "js": [frontend/content.js]
+		}
+	  ]
+}
