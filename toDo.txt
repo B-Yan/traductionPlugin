@@ -1,3 +1,5 @@
 make sur that the software can store many url and then many traduction (it can't yet)
 allow for many different video on the same page
 add a button that reload the script on the page -- not necessary, it already check for new video every 5 sec until it find a video... maybe refresh it anyway after the first video is traduced to check for new video?
+
+Create requirements.txt file -> https://docs.microsoft.com/en-us/visualstudio/python/managing-required-packages-with-requirements-txt?view=vs-2019
