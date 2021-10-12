@@ -4,8 +4,8 @@
 	"version": "0.1",
 	"description": "Parse audio content to get input timestamp",
 	"action": {
-		"default_icon": "frontend/icon.png",
-		"default_popup": "frontend/popup.html",
+		"default_icon": "icon.png",
+		"default_popup": "popup.html",
 		"default_title": "AudioSearch"
 	},
 	"permissions": ["activeTab", "storage"],
@@ -14,7 +14,7 @@
 		"matches":[
 		 "<all_urls>"
 		 ],
-		"js": ["frontend/content.js"]
+		"js": ["content.js"]
 	}
 	]
 }

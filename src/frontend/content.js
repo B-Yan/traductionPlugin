@@ -21,5 +21,5 @@ function searchVid(){
 
 function webStore(message){
 	chrome.storage.local.set({url: message});
-	alert(url);
+	//alert(url);
 }
