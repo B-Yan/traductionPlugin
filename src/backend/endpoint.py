@@ -1,32 +1,41 @@
-'''
-
-'''
-
-from flask import Flask
+from flask import Flask, request
 import requests
-import pydub import AudioSegment
-# from flask_restful
-
+import os
+from pydub import AudioSegment
+from recognition import *
 app = Flask(__name__)
 
-@app.route('/<URL>')
-def get_video(URL):
-    '''
-    takes an URL as imput and return the timestamp_list from the translation
+@app.route('/',methods = ['GET'])
+def getHelloWorld():
+    return "helloworld"
 
-    1- Download from URL
-    '''
-    file = requests.get(URL) # file format: file.
-    # TODO: Identify format
-    file_type = file.headers['Content-Type']
-    file_extension=
-
-    wav_file = AudioSegment.from_file(f"<file_name.{format}>").export('audiofile.wav', format='wav')
-
-    # return a list of timestamp
+@app.route('/',methods = ['POST'])
+def get_video():
+    URL = request.get_json()["URL"]
+    print("INFO - URL: " + URL)
+    WAVNAME = "audiofile.wav"
+    name = getFilename(URL)
+    getResponse(URL, name[0])
+    AudioSegment.from_file(name[0], name[1]).export(WAVNAME, format='wav')
+    os.remove(name[0])
+    timestamp_list = getTimestampList(WAVNAME)
+    os.remove(WAVNAME)
     return timestamp_list
 
+def getResponse(URL, filename):
+    response = requests.get(URL)
+    file = open(filename, "wb")
+    file.write(response.content) #TODO here file and response are open, potential ram issue -> stream
+    file.close()
+    response.close()
 
-
+def getFilename(URL):
+    name = URL.split("/")
+    name = name[len(name)-1]
+    name = name.split(".")
+    name[0] = name[0] + "." + name[1]
+    return name
+    
 if __name__=="__main__":
-    app.run(debug=True)
+    port = int(os.environ.get('PORT', 5000))
+    app.run(debug=True, host='0.0.0.0', port=port)
