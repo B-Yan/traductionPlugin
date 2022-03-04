@@ -35,14 +35,13 @@ The project is divided in 2 main parts:
 ## Sources
 
 Requirements:
--Docker
--Chrome
+- Docker
+- Chrome
 
 ## Sources
 
 Githubs for libraries that enabled this project
-https://github.com/Uberi/speech_recognition
-https://github.com/ytdl-org/youtube-dl
+- https://github.com/Uberi/speech_recognition
 
 ## Short-term goals
 
