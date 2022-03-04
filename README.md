@@ -45,19 +45,19 @@ Githubs for libraries that enabled this project
 
 ## Short-term goals
 
-Add youtube
-Create a nicer GUI on google chrome
-Adapt the extension for any web browser
-Make sur that the software can work with multiple tab
-Allow for many different video on the same page
-Add a button that reload the script on the page -- not necessary
-Optimize the AI (in my test run watching the 10 sec video is quicker than running the AI)
-Add unit test to python backend
-Add a config.file
-Replace print/console.log by logger 
-readContent.searchIt/getUrl could benefit from subfonction for frontend capabilities
-content.searchVid should have it's code separeted in subfonction by webpage/url (default, youtube, etc.)
+- Add youtube ++
+- Make sur that the software can work with multiple tab ++
+- Allow for many different video on the same page ++
+- Optimize the AI (in my test run watching the 10 sec video is quicker than running the AI) ++ (Maybe we could replace speechrecognition directly by pocketsphinx?)
+- Add unit test to python backend
+- Add a config.file
+- Replace print/console.log by logger 
+- readContent.searchIt/getUrl could benefit from subfonction for frontend capabilities
+- content.searchVid should have it's code separeted in subfonction by webpage/url (default, youtube, etc.)
 
-Save a prebuilt image of the API on dockerhub?
-Make infrastructure as code with terraform?
-Maybe we could replace speechrecognition directly by pocketsphinx?
+### Longer-term goals
+
+- Create a nicer GUI on google chrome
+- Adapt the extension for any web browser
+- Save a prebuilt image of the API on dockerhub
+- Make infrastructure as code with terraform
