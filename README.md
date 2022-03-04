@@ -34,8 +34,6 @@ The project is divided in 2 main parts:
 
 ## Sources
 
-The scraper and the recognizer are to the basec functionning level
-
 Requirements:
 -Docker
 -Chrome
