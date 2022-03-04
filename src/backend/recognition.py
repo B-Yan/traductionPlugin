@@ -1,21 +1,28 @@
+'''
+A tool to read a wav file and to give the text with timestamp.
+
+@author Antoine Marion, Yannick Bellerose
+@version 2.0.0
+'''
+
 import speech_recognition as sr
 import pocketsphinx
 import pydub
 
-'''
-The idea is to parse an audio file by segment in
-a loop with an overlap between each segment to avoid
-the cuts
-'''
 OFFSET = 0
 CHUNK_LEN = 4
 OVERLAP = 1.5
-ERROR_STRING = 'NoWordsErrorString'
+ERROR_STRING = '' #is shown when there is no voice in the segment
 
+'''
+The idea is to parse an audio file by segment in a loop with an overlap between each segment to avoid the cuts.
+
+@param filename the complete filename and path of the .wav file to treat (./myFile.wav)
+@return a json representing the text of the video {"step": x, "content": ["Some text", "some other text", ...]} where X is the step lenght in seconds
+'''
 def getTimestampList(filename):
     actualOffset = OFFSET
     text_register = []
-    i=0
     completed = False
     file_length = 0
 
@@ -31,11 +38,10 @@ def getTimestampList(filename):
                 text = r.recognize_sphinx(audio_data=audio, language='en-US')  # , show_all=True) # Show All gives
         except sr.UnknownValueError as error:
             text = ERROR_STRING
-        content = "{\"time\":\""+str(actualOffset)+"\",\"content\":\""+text+"\"}"
-        text_register.append(content)
-        print("INFO - CONTENT: " + content)
+        text_register.append("\""+text+"\"")
+        print("INFO - CONTENT: " + str(actualOffset) + " - " + text)
         actualOffset += CHUNK_LEN - OVERLAP
-        if (actualOffset + CHUNK_LEN) > file_length:
+        if (actualOffset) >= file_length:
             completed = True
 
-    return "{\"list\":[" + ",".join(text_register) + "]}"
+    return "{\"step\":"+str((CHUNK_LEN-OVERLAP))+",\"list\":[" + ",".join(text_register) + "]}"

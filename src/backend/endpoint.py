@@ -1,14 +1,32 @@
+'''
+A flask controller that serve request. It's the starting point of the application
+
+@author Yannick Bellerose
+@version 1.0.0
+'''
+
 from flask import Flask, request
+from flask_cors import CORS
 import requests
 import os
 from pydub import AudioSegment
 from recognition import *
 app = Flask(__name__)
+CORS(app)
 
+'''
+The default endpoint it show a small text to describe how to use this API
+'''
 @app.route('/',methods = ['GET'])
 def getHelloWorld():
-    return "helloworld"
+    return "Welcome to controleFVoix a tool to extract the text with timestamp, to use it call this same endpoint but with a post request respecting the following format: {\"URL\":\"https://www.w3schools.com/html/mov_bbb.mp4\"}"
 
+'''
+The POST endpoint transforming a video to an array where each part are the same length
+
+@param body {"URL":"theUrlOfYourVideo"}
+@return a json representing the text of the video {"step": x, "content": ["Some text", "some other text", ...]} where X is the step lenght in seconds
+'''
 @app.route('/',methods = ['POST'])
 def get_video():
     URL = request.get_json()["URL"]
@@ -22,6 +40,12 @@ def get_video():
     os.remove(WAVNAME)
     return timestamp_list
 
+'''
+A simple function that download a file and write it to the disk
+
+@param URL the url of the file to download
+@param filename the name (and the path if required) you want the file to have
+'''
 def getResponse(URL, filename):
     response = requests.get(URL)
     file = open(filename, "wb")
@@ -29,6 +53,12 @@ def getResponse(URL, filename):
     file.close()
     response.close()
 
+'''
+A function that receive a complete url and return an array containing the name with the extension, and the extension
+
+@param URL the url of a file you want the name or extension
+@return an array containing [0] the name of the file (including the extension) [1] the extension of the file
+'''
 def getFilename(URL):
     name = URL.split("/")
     name = name[len(name)-1]

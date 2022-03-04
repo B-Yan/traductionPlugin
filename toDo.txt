@@ -1,6 +1,12 @@
+integrate frontend with backend
+
 make sur that the software can store many url and then many traduction (it can't yet)
 allow for many different video on the same page
 add a button that reload the script on the page -- not necessary, it already check for new video every 5 sec until it find a video... maybe refresh it anyway after the first video is traduced to check for new video?
 
 Maybe we could replace speechrecognition directly by pocketsphinx?
-The build take 5 minutes ->
+The build take 5 minutes -> save some of it on dockerhub
+The python backend is too slow (barely quicker than actually watching the video) ->
+    optimize the AI step
+    don't write to disk (marginal compared to the AI)
+Add unit test to python backend

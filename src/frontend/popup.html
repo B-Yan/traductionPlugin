@@ -5,10 +5,15 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title> AudioSearch </title>
 		<link rel="stylesheet" href="style.css" type="text/css">
+		<script src="readContent.js"></script>
 	</head>
 
 	<body>
-		<h1>URL</h1>
+		<h1>ControleFVoix</h1>
+		<form id="theForm" action="#" onsubmit="searchIt()"> <!--Doesn't call the function-->
+			<label for="word">Search:</label>
+			<input type="text" id="word" name="word">
+			<input type="submit" value="Submit">
+		</form> 
 		<span id="theUrl">Maybe the script didn't run... I should implement a button here to manually launch the script...</span>
-	<script src="readContent.js"></script>	
 	</body>
