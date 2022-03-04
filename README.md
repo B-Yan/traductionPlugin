@@ -47,7 +47,6 @@ Githubs for libraries that enabled this project
 
 - Add youtube ++
 - Make sur that the software can work with multiple tab ++
-- Allow for many different video on the same page ++
 - Optimize the AI (in my test run watching the 10 sec video is quicker than running the AI) ++ (Maybe we could replace speechrecognition directly by pocketsphinx?)
 - Add unit test to python backend
 - Add a config.file
@@ -58,6 +57,7 @@ Githubs for libraries that enabled this project
 ### Longer-term goals
 
 - Create a nicer GUI on google chrome
+- Allow for many different video on the same page
 - Adapt the extension for any web browser
 - Save a prebuilt image of the API on dockerhub
 - Make infrastructure as code with terraform
