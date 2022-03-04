@@ -54,6 +54,9 @@ Add a button that reload the script on the page -- not necessary
 Optimize the AI (in my test run watching the 10 sec video is quicker than running the AI)
 Add unit test to python backend
 Add a config.file
+Replace print/console.log by logger 
+readContent.searchIt/getUrl could benefit from subfonction for frontend capabilities
+content.searchVid should have it's code separeted in subfonction by webpage/url (default, youtube, etc.)
 
 Save a prebuilt image of the API on dockerhub?
 Make infrastructure as code with terraform?

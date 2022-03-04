@@ -7,14 +7,21 @@
  */
 var url = chrome.tabs.query({active:true},function(tab){return tab[0].url;});
 var myJson;
+var theForm;
+var theText;
 
 window.onload = function(){
+    theForm = document.getElementById("theForm");
+    theText = document.getElementById("theText");
+    theVal = document.getElementById("word");
 	getUrl();
+    chrome.storage.onChanged.addListener((changes, namespace) => {
+        getUrl();
+    });
+    theForm.onsubmit = searchIt;
 }
 
-chrome.storage.onChanged.addListener((changes, namespace) => {
-    getUrl();
-});
+
 
 /**
  * Gets called when chrome.storage change. 
@@ -26,20 +33,33 @@ function getUrl(){
         str = result.url;
         try {
             myJson = JSON.parse(str);
-            document.getElementById("theUrl").style="display:none";
-            document.getElementById("theForm").style="display:block";
+            theForm.style.display="block";
+            theText.display = "none";
         } catch (e) {
-            document.getElementById("theUrl").innerHTML = str;
+            theText.textContent = str;
         }   
     });
 }
 
-//SearchIt doesn't work and I have no clues why... Is it this tab business?
-function searchIt(){
-    console.log("test");
-    //extract word
-    //listOfTime
-    //for (var i...)
-    //if contains word listOfTime.append(i)
-    //theUrl.display + content = list
+/**
+ * A function that take the value extracted in getUrl and the value in the form.
+ * It then search in the JSON for the value and calculate where it is in the file.
+ * Afterwards it display it
+ *  
+ * @param event the submit event that triggered the search, to stop the normal submit
+ */
+function searchIt(event){
+    event.preventDefault();
+    theText.display = "block";
+    var results = [];
+    for (var i = 0; i<myJson.list.length; i++){
+        if (myJson.list[i].includes(theVal.value)){
+            results.push(i*myJson.step);
+        }
+    }
+    if (results.length == 0){
+        theText.textContent = "This word " + theVal.value + " doesn't appear in the video";
+    } else {
+        theText.textContent = "The word " + theVal.value + " appears at time: " + results.toString() + " seconds";
+    }
 }
