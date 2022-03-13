@@ -9,13 +9,7 @@ import speech_recognition as sr
 import pocketsphinx
 import pydub
 
-import threading
-import multiprocessing
-import time
-import concurrent.futures as cf
-import numpy as np
-
-
+<<<<<<< Updated upstream
 OFFSET = 0
 CHUNK_LEN = 4
 OVERLAP = 1.5
@@ -50,7 +44,28 @@ def getTimestampList(filename):
         actualOffset += CHUNK_LEN - OVERLAP
         if (actualOffset) >= file_length:
             completed = True
+=======
+# The idea is to parse an audio file by segment in
+# a loop with an overlap between each segment to avoid
+# the cuts
+OFFSET = 0  # Tunable parameter
+CHUNK_LEN = 4  # Tunable parameter
+OVERLAP = 1.5  # Tunable parameter
+STEP = CHUNK_LEN - OVERLAP
+text_register = []  # List with an index and the words associated with the index segment
 
+counter = 0
+
+
+def get_timestamp(text_register: list, input: str):
+    # Check if the input substring can be found in the text_register strings
+    timestamps_list = []
+    # Go through each line of the text_register
+    for i in range(len(text_register)):
+        if text_register[i][1].find(input) != -1:
+            # Add the index in text_register converted in seconds
+            timestamps_list.append((i + 1) * STEP)
+    return timestamps_list
 
 
 # get user input
@@ -90,67 +105,6 @@ while True:
         counter += 1
         text_register.append([counter, 'NoWordsErrorString'])
         pass
-
+>>>>>>> Stashed changes
 
     return "{\"step\":"+str((CHUNK_LEN-OVERLAP))+",\"list\":[" + ",".join(text_register) + "]}"
-
-
-
-
-# Get the length before the while loop to set a for loop instead
-def GetFileLength(filename_):
-    # Returns file length as int [seconds]
-    with sr.AudioFile(filename_) as source:
-        return source.DURATION
-
-
-# attempt to multi process the loop. Call this method as target for MultiProcess librairies
-def MultiProcessRecognition(filename_, localOffset_):
-    # Use of multiprocess instead of thread because CPU bound task
-    try:
-        with sr.AudioFile(filename_) as source:
-            r = sr.Recognizer()
-            audio = r.record(source, offset=localOffset_, duration=CHUNK_LEN)
-            text = r.recognize_sphinx(audio_data=audio, language='en-US')
-    except sr.UnknownValueError as error:
-        text = ERROR_STRING
-    return (text, localOffset_)
-
-def OffsetListCreate(numberOfThreads_):
-    # list of localOffset_ args for MultiProcessRecognition
-    return np.array([OFFSET*(i+1) for i in range(numberOfThreads_)])
-
-def SortTextRegister(textRegister_):
-    # Sorts based on offset value
-    return textRegister.sort(key=lambda x: x[1])
-
-   
-textRegister = []
-def main():
-    # https://www.webucator.com/article/python-clocks-explained/
-    # Plus fiable que time(), plus précis que process_time()
-    startTime = time.perf_counter()
-    
-    filePath = r"C:\Users\antoi\Desktop\Github\Russias_war_in_Ukraine_enters_its_(getmp3.pro)"
-    fileLength = GetFileLength(filePath)
-    numberOfThreads = int(fileLength/CHUNK_LEN)
-    offsetList = OffsetListCreate(numberOfThreads)
-
-    with cf.ProcessPoolExecutor() as executor:
-        #TODO: Specify offset list argument from for loop
-        results = [executor.submit(MultiProcessRecognition, localOffset_) for localOffset_ in offsetList]
-
-        for f in cf.as_completed(results):
-            textRegister.append(f.result())
-
-    textRegister = SortTextRegister(textRegister)
-
-    endTime = time.perf_counter()
-    print('execution time [sec]: ', endTime - startTime)
-    print('Text register: ', textRegister)
-    
-
-
-if __name__ == '__main__':
-    main()
-
