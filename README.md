@@ -46,6 +46,7 @@ Githubs for libraries that enabled this project
 ### Longer-term goals
 
 - Create a nicer GUI on google chrome
+- Allow for many different video on the same page
 - Adapt the extension for any web browser
 - Save a prebuilt image of the API on dockerhub
 - Make infrastructure as code with terraform
