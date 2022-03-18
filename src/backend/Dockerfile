@@ -1,6 +1,7 @@
 FROM ubuntu:latest
 WORKDIR /usr/src/app
 COPY . .
+RUN cp main/* .
 ENV DEBIAN_FRONTEND=noninteractive 
 RUN apt-get update -y
 RUN apt-get install -y gcc python3 python3-all-dev python3-pip build-essential swig git libpulse-dev libasound2-dev ffmpeg

@@ -50,3 +50,6 @@ Githubs for libraries that enabled this project
 - Adapt the extension for any web browser
 - Save a prebuilt image of the API on dockerhub
 - Make infrastructure as code with terraform
+- Add a button that reload the script on the page -- not necessary, it already check for new video every 5 sec until it find a video... maybe refresh it anyway after the first video is traduced to check for new video?
+
+
