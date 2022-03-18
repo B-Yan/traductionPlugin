@@ -4,3 +4,4 @@ requests
 pydub
 pocketsphinx
 speechrecognition
+youtube_dl

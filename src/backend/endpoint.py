@@ -9,6 +9,9 @@ from flask import Flask, request
 from flask_cors import CORS
 import requests
 import os
+import youtube_dl
+import random
+import string
 from pydub import AudioSegment
 from recognition import *
 app = Flask(__name__)
@@ -31,14 +34,43 @@ The POST endpoint transforming a video to an array where each part are the same 
 def get_video():
     URL = request.get_json()["URL"]
     print("INFO - URL: " + URL)
-    WAVNAME = "audiofile.wav"
+    WAVNAME = ''.join(random.SystemRandom().choice(string.ascii_letters + string.digits) for _ in range(25)) + ".wav"
+    name = []
+    if "youtube.com" in URL:
+        youtubeURL(URL, WAVNAME)
+    elif "dailymotion.com" in URL:
+        dailymotionURL(URL)
+    elif "vimeo.com" in URL:
+        vimeoURL(URL)
+    else:
+        defaultURL(URL, WAVNAME)
+    timestamp_list = getTimestampList(WAVNAME)
+    os.remove(WAVNAME)
+    return timestamp_list
+
+def youtubeURL(URL, WAVNAME):
+    ydl_opts = {
+        'format': 'bestaudio/best'
+    }
+    filename = ""
+    with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+        info = ydl.extract_info(URL, download=True)
+        filename = ydl.prepare_filename(info)
+    name = getFilename(filename)
+    AudioSegment.from_file(name[0], name[1]).export(WAVNAME, format='wav')
+    os.remove(name[0])
+
+def dailymotionURL(URL):
+    raise Exception("Dailymotion not yet implemented")
+
+def vimeoURL(URL):
+    raise Exception("Vimeo not yet implemented")
+
+def defaultURL(URL, WAVNAME):
     name = getFilename(URL)
     getResponse(URL, name[0])
     AudioSegment.from_file(name[0], name[1]).export(WAVNAME, format='wav')
     os.remove(name[0])
-    timestamp_list = getTimestampList(WAVNAME)
-    os.remove(WAVNAME)
-    return timestamp_list
 
 '''
 A simple function that download a file and write it to the disk
@@ -65,7 +97,7 @@ def getFilename(URL):
     name = name.split(".")
     name[0] = name[0] + "." + name[1]
     return name
-    
+
 if __name__=="__main__":
     port = int(os.environ.get('PORT', 5000))
     app.run(debug=True, host='0.0.0.0', port=port)
